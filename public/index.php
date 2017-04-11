@@ -31,12 +31,13 @@ $app->get('/home', function(ServerRequestInterface $request) {
 
 $app->get('/category-costs', function() use($app) {
 	$view = $app->service('view.renderer');
-	return $view->render('category-costs/list.html.twig');
-});
 
-$app->get('/{name}', function(ServerRequestInterface $request) use($app) {
-	$view = $app->service('view.renderer');
-	return $view->render('test.html.twig', ['name' => $request->getAttribute('name')]);
+	$meuModel = new \VRSFin\Models\CategoryCost();
+	$categories = $meuModel->all();
+
+	return $view->render('category-costs/list.html.twig', [
+		'categories' => $categories
+	]);
 });
 
 $app->start();
