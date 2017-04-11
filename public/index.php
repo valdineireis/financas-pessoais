@@ -29,15 +29,25 @@ $app->get('/home', function(ServerRequestInterface $request) {
 	return $response;
 });
 
-$app->get('/category-costs', function() use($app) {
-	$view = $app->service('view.renderer');
+$app
+	->get('/category-costs', function() use($app) {
+		$view = $app->service('view.renderer');
 
-	$meuModel = new \VRSFin\Models\CategoryCost();
-	$categories = $meuModel->all();
+		$meuModel = new \VRSFin\Models\CategoryCost();
+		$categories = $meuModel->all();
 
-	return $view->render('category-costs/list.html.twig', [
-		'categories' => $categories
-	]);
-});
+		return $view->render('category-costs/list.html.twig', [
+			'categories' => $categories
+		]);
+	})
+	->get('/category-costs/new', function() use($app) {
+		$view = $app->service('view.renderer');
+		return $view->render('category-costs/create.html.twig');
+	})
+	->post('/category-costs/store', function(ServerRequestInterface $request) use($app) {
+		$data = $request->getParsedBody();
+		\VRSFin\Models\CategoryCost::create($data);
+		return new \Zend\Diactoros\Response\RedirectResponse('/category-costs');
+	});
 
 $app->start();
