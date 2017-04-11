@@ -14,6 +14,13 @@ class ViewPlugin implements PluginInterface
 		$container->addLazy('twig', function(ContainerInterface $container) {
 			$loader = new \Twig_loader_Filesystem(__DIR__ . '/../../templates');
 			$twig = new \Twig_Environment($loader);
+
+			$genarator = $container->get('routing.generator');
+			$twig->addFunction(new \Twig_SimpleFunction('route', 
+				function(string $name, array $params = []) use($genarator) {
+					return $genarator->generate($name, $params);
+				})
+			);
 			return $twig;
 		});
 
