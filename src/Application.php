@@ -6,6 +6,7 @@ namespace VRSFin;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use VRSFin\Plugins\PluginInterface;
+use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Diactoros\Response\SapiEmitter;
 
 class Application
@@ -48,6 +49,11 @@ class Application
 		$routing = $this->service('routing');
 		$routing->post($name, $path, $action);
 		return $this;
+	}
+
+	public function redirect($path)
+	{
+		return new RedirectResponse($path);
 	}
 
 	public function start()

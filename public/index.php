@@ -47,7 +47,7 @@ $app
 	->post('/category-costs/store', function(ServerRequestInterface $request) use($app) {
 		$data = $request->getParsedBody();
 		\VRSFin\Models\CategoryCost::create($data);
-		return new \Zend\Diactoros\Response\RedirectResponse('/category-costs');
+		return $app->redirect('/category-costs');
 	});
 
 $app->start();
