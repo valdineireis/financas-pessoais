@@ -48,6 +48,22 @@ $app
 		$data = $request->getParsedBody();
 		\VRSFin\Models\CategoryCost::create($data);
 		return $app->route('category-costs.list');
-	}, 'category-costs.store');
+	}, 'category-costs.store')
+	->get('/category-costs/{id}/edit', function(ServerRequestInterface $request) use($app) {
+		$view = $app->service('view.renderer');
+		$id = $request->getAttribute('id');
+		$category = \VRSFin\Models\CategoryCost::findOrFail($id);
+		return $view->render('category-costs/edit.html.twig', [
+			'category' => $category
+		]);
+	}, 'category-costs.edit')
+	->post('/category-costs/{id}/update', function(ServerRequestInterface $request) use($app) {
+		$id = $request->getAttribute('id');
+		$category = \VRSFin\Models\CategoryCost::findOrFail($id);
+		$data = $request->getParsedBody();
+		$category->fill($data);
+		$category->save();
+		return $app->route('category-costs.list');
+	}, 'category-costs.update');
 
 $app->start();
