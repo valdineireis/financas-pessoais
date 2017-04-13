@@ -3,10 +3,9 @@
 use Psr\Http\Message\ServerRequestInterface;
 use VRSFin\Models\CategoryCost;
 
-$repository = $app->service('repository.factory')->factory(CategoryCost::class);
-
 $app
-	->get('/category-costs', function() use($app, $repository) {
+	->get('/category-costs', function() use($app) {
+		$repository = $app->service('category-cost.repository');
 		$view = $app->service('view.renderer');
 
 		$categories = $repository->all();
@@ -22,7 +21,8 @@ $app
 		return $view->render('category-costs/create.html.twig');
 	}, 'category-costs.new')
 
-	->post('/category-costs/store', function(ServerRequestInterface $request) use($app, $repository) {
+	->post('/category-costs/store', function(ServerRequestInterface $request) use($app) {
+		$repository = $app->service('category-cost.repository');
 		$data = $request->getParsedBody();
 		
 		$repository->create($data);
@@ -31,7 +31,8 @@ $app
 
 	}, 'category-costs.store')
 
-	->get('/category-costs/{id}/edit', function(ServerRequestInterface $request) use($app, $repository) {
+	->get('/category-costs/{id}/edit', function(ServerRequestInterface $request) use($app) {
+		$repository = $app->service('category-cost.repository');
 		$view = $app->service('view.renderer');
 		$id = $request->getAttribute('id');
 
@@ -43,9 +44,9 @@ $app
 
 	}, 'category-costs.edit')
 
-	->post('/category-costs/{id}/update', function(ServerRequestInterface $request) use($app, $repository) {
+	->post('/category-costs/{id}/update', function(ServerRequestInterface $request) use($app) {
+		$repository = $app->service('category-cost.repository');
 		$id = $request->getAttribute('id');
-		$category = $repository->find($id);
 		$data = $request->getParsedBody();
 
 		$repository->update($id, $data);
@@ -54,7 +55,8 @@ $app
 
 	}, 'category-costs.update')
 
-	->get('/category-costs/{id}/show', function(ServerRequestInterface $request) use($app, $repository) {
+	->get('/category-costs/{id}/show', function(ServerRequestInterface $request) use($app) {
+		$repository = $app->service('category-cost.repository');
 		$view = $app->service('view.renderer');
 		$id = $request->getAttribute('id');
 
@@ -66,7 +68,8 @@ $app
 
 	}, 'category-costs.show')
 
-	->get('/category-costs/{id}/delete', function(ServerRequestInterface $request) use($app, $repository) {
+	->get('/category-costs/{id}/delete', function(ServerRequestInterface $request) use($app) {
+		$repository = $app->service('category-cost.repository');
 		$id = $request->getAttribute('id');
 
 		$repository->delete($id);
