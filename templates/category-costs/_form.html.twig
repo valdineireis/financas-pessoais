@@ -1,0 +1,10 @@
+<form method="post" action="{{ action }}">
+    <div class="form-group">
+        <label class="control-label">Nome</label>
+        <input type="text" name="name" class="form-control" placeholder="Nome" 
+    		value="{{ category.name }}">
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">
+        <span class="glyphicon glyphicon-{{ submitIcon }}"></span>
+    </button>
+</form>
