@@ -27,7 +27,12 @@ class DefaultRepository implements RepositoryInterface
 
 	public function all(): array
 	{
-		return $this-model->all();
+		return $this->model->all()->toArray();
+	}
+
+	public function find(int $id)
+	{
+		return $this->model->findOrFail($id);
 	}
 
 	public function create(array $data)
@@ -39,7 +44,7 @@ class DefaultRepository implements RepositoryInterface
 
 	public function update(int $id, array $data)
 	{
-		$model = $this->model->findOrFail($id);
+		$model = $this->find($id);
 		$model->fill($data);
 		$model->save();
 		return $model;
@@ -47,7 +52,7 @@ class DefaultRepository implements RepositoryInterface
 
 	public function delete(int $id)
 	{
-		$model = $this->model->findOrFail($id);
+		$model = $this->find($id);
 		$model->delete();
 	}
 }

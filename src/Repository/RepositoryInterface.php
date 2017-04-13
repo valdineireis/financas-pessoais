@@ -7,6 +7,8 @@ interface RepositoryInterface
 {
 	public function all(): array;
 
+	public function find(int $id);
+
 	public function create(array $data);
 
 	public function update(int $id, array $data);
