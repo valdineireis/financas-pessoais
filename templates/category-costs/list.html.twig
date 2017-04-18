@@ -14,6 +14,7 @@
                         <div class="col-md-12">
                             <a href="{{ route('category-costs.new') }}" class="btn btn-default">
                                 <span class="glyphicon glyphicon-plus"></span>
+                                Adicionar
                             </a>
                         </div>
                     </div>
@@ -36,10 +37,12 @@
                                         <td>
                                             <a href="{{ route('category-costs.edit',{'id': category.id}) }}">
                                                 <span class="glyphicon glyphicon-pencil"></span>
+                                                Editar
                                             </a>
-                                            |
+                                            &nbsp;|&nbsp;
                                             <a href="{{ route('category-costs.show',{'id': category.id}) }}">
                                                 <span class="glyphicon glyphicon-remove"></span>
+                                                Remover
                                             </a>
                                         </td>
                                     </tr>
