@@ -5,6 +5,7 @@ namespace VRSFin\Plugins;
 
 use Interop\Container\ContainerInterface;
 use VRSFin\Models\CategoryCost;
+use VRSFin\Models\User;
 use VRSFin\Repository\RepositoryFactory;
 use VRSFin\ServiceContainerInterface;
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -21,6 +22,10 @@ class DbPlugin implements PluginInterface
         $container->add('repository.factory', new RepositoryFactory());
         $container->addLazy('category-cost.repository', function(ContainerInterface $container) {
         	return $container->get('repository.factory')->factory(CategoryCost::class);
+        });
+
+        $container->addLazy('user.repository', function(ContainerInterface $container) {
+            return $container->get('repository.factory')->factory(User::class);
         });
     }
 }

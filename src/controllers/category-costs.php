@@ -1,7 +1,6 @@
 <?php 
 
 use Psr\Http\Message\ServerRequestInterface;
-use VRSFin\Models\CategoryCost;
 
 $app
 	->get('/category-costs', function() use($app) {
