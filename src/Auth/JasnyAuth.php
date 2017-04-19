@@ -2,6 +2,7 @@
 
 namespace VRSFin\Auth;
 
+use Jasny\Auth\Sessions;
 use Jasny\Auth\User;
 use VRSFin\Repository\RepositoryInterface;
 
@@ -9,6 +10,9 @@ class JasnyAuth extends \Jasny\Auth
 {
 	use Sessions;
 
+	/**
+	 * @var RepositoryInterface
+	 */
 	private $repository;
 
 	public function __construct(RepositoryInterface $repository)
@@ -24,7 +28,7 @@ class JasnyAuth extends \Jasny\Auth
      */
     public function fetchUserById($id)
     {
-    	return $this->repository->find($id);
+    	return $this->repository->find($id, false);
     }
 
     /**

@@ -32,7 +32,8 @@ class DefaultRepository implements RepositoryInterface
 
 	public function find(int $id, bool $failIfNotExist = true)
 	{
-		return $failIfNotExist ? $this->model->findOrFail($id) :
+		return $failIfNotExist ? 
+			$this->model->findOrFail($id) :
 			$this->model->find($id);
 	}
 
