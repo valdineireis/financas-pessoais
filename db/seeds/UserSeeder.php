@@ -14,6 +14,10 @@ class UserSeeder extends AbstractSeed
      */
     public function run()
     {
+        /** @var VRSFin\Application $app */
+        $app = require __DIR__ . '/../bootstrap.php';
+        $auth = $app->service('auth');
+
         $faker = \Faker\Factory::create('pt_BR');
 
         $users = $this->table('users');
@@ -23,7 +27,7 @@ class UserSeeder extends AbstractSeed
             'first_name' => $faker->firstName,
             'last_name' => $faker->lastName,
             'email' => 'admin@user.com',
-            'password' => '123456',
+            'password' => $auth->hashPassword('123456'),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ])->save();
@@ -34,7 +38,7 @@ class UserSeeder extends AbstractSeed
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'email' => $faker->unique()->email,
-                'password' => '123456',
+                'password' => $auth->hashPassword('123456'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ];
