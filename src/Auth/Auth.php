@@ -31,7 +31,7 @@ class Auth implements AuthInterface
 
 	public function logout(): void
 	{
-
+		$this->jasnyAuth->logout();
 	}
 
 	public function hashPassword(string $password): string
