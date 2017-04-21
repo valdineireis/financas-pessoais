@@ -6,8 +6,9 @@ $app
 	->get('/category-costs', function() use($app) {
 		$repository = $app->service('category-cost.repository');
 		$view = $app->service('view.renderer');
+		$auth = $app->service('auth');
 
-		$categories = $repository->all();
+		$categories = $repository->findByField('user_id', $auth->user()->getId());
 
 		return $view->render('category-costs/list.html.twig', [
 			'categories' => $categories
