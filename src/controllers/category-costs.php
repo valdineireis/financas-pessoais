@@ -87,6 +87,7 @@ $app
 
 	->get('/category-costs/{id}/delete', function(ServerRequestInterface $request) use($app) {
 		$repository = $app->service('category-cost.repository');
+		$auth = $app->service('auth');
 		$id = $request->getAttribute('id');
 
 		$repository->delete([

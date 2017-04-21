@@ -1,0 +1,54 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Ver conta a receber
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="panel-body">
+                        <div class="row">
+                            <a href="{{ route('bill-receives.edit',{'id': bill.id}) }}"
+                                class="btn btn-primary">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                Editar
+                            </a>
+                            <a href="{{ route('bill-receives.delete',{'id': bill.id}) }}"
+                                class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove"></span>
+                                Remover
+                            </a>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">#</th>
+                                        <td>{{ bill.id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Data Lanc.</th>
+                                        <td>{{ bill.date_launch | date('d/m/Y') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Nome</th>
+                                        <td>{{ bill.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Valor</th>
+                                        <td>{{ bill.value | number_format(2, ',', '.') }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
