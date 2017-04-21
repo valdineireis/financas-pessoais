@@ -23,8 +23,11 @@ $app
 
 	->post('/category-costs/store', function(ServerRequestInterface $request) use($app) {
 		$repository = $app->service('category-cost.repository');
+		$auth = $app->service('auth');
+
 		$data = $request->getParsedBody();
-		
+		$data['user_id'] = $auth->user()->getId();
+
 		$repository->create($data);
 
 		return $app->route('category-costs.list');
@@ -33,10 +36,14 @@ $app
 
 	->get('/category-costs/{id}/edit', function(ServerRequestInterface $request) use($app) {
 		$repository = $app->service('category-cost.repository');
+		$auth = $app->service('auth');
 		$view = $app->service('view.renderer');
 		$id = $request->getAttribute('id');
 
-		$category = $repository->find($id);
+		$category = $repository->findOneBy([
+			'id' => $id,
+			'user_id' => $auth->user()->getId()
+		]);
 
 		return $view->render('category-costs/edit.html.twig', [
 			'category' => $category
@@ -46,10 +53,16 @@ $app
 
 	->post('/category-costs/{id}/update', function(ServerRequestInterface $request) use($app) {
 		$repository = $app->service('category-cost.repository');
+		$auth = $app->service('auth');
+
 		$id = $request->getAttribute('id');
 		$data = $request->getParsedBody();
+		$data['user_id'] = $auth->user()->getId();
 
-		$repository->update($id, $data);
+		$repository->update([
+			'id' => $id,
+			'user_id' => $auth->user()->getId()
+		], $data);
 
 		return $app->route('category-costs.list');
 
@@ -57,10 +70,14 @@ $app
 
 	->get('/category-costs/{id}/show', function(ServerRequestInterface $request) use($app) {
 		$repository = $app->service('category-cost.repository');
+		$auth = $app->service('auth');
 		$view = $app->service('view.renderer');
 		$id = $request->getAttribute('id');
 
-		$category = $repository->find($id);
+		$category = $repository->findOneBy([
+			'id' => $id,
+			'user_id' => $auth->user()->getId()
+		]);
 
 		return $view->render('category-costs/show.html.twig', [
 			'category' => $category
@@ -72,7 +89,10 @@ $app
 		$repository = $app->service('category-cost.repository');
 		$id = $request->getAttribute('id');
 
-		$repository->delete($id);
+		$repository->delete([
+			'id' => $id,
+			'user_id' => $auth->user()->getId()
+		]);
 
 		return $app->route('category-costs.list');
 
