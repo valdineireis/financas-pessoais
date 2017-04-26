@@ -5,6 +5,7 @@ namespace VRSFin\Plugins;
 
 use Interop\Container\ContainerInterface;
 use VRSFin\Models\BillReceive;
+use VRSFin\Models\BillPay;
 use VRSFin\Models\CategoryCost;
 use VRSFin\Models\User;
 use VRSFin\Repository\RepositoryFactory;
@@ -27,6 +28,10 @@ class DbPlugin implements PluginInterface
 
         $container->addLazy('bill-receive.repository', function(ContainerInterface $container) {
             return $container->get('repository.factory')->factory(BillReceive::class);
+        });
+
+        $container->addLazy('bill-pay.repository', function(ContainerInterface $container) {
+            return $container->get('repository.factory')->factory(BillPay::class);
         });
 
         $container->addLazy('user.repository', function(ContainerInterface $container) {

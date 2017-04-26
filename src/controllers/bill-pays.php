@@ -4,7 +4,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 $app
 	->get('/bill-pays', function() use($app) {
-		$repository = $app->service('bill-receive.repository');
+		$repository = $app->service('bill-pay.repository');
 		$view = $app->service('view.renderer');
 		$auth = $app->service('auth');
 
@@ -18,17 +18,30 @@ $app
 
 	->get('/bill-pays/new', function() use($app) {
 		$view = $app->service('view.renderer');
-		return $view->render('bill-pays/create.html.twig');
+		$auth = $app->service('auth');
+		$categoryRepository = $app->service('category-cost.repository');
+
+		$categories = $categoryRepository->findByField('user_id', $auth->user()->getId());
+		
+		return $view->render('bill-pays/create.html.twig', [
+			'categories' => $categories
+		]);
 	}, 'bill-pays.new')
 
 	->post('/bill-pays/store', function(ServerRequestInterface $request) use($app) {
-		$repository = $app->service('bill-receive.repository');
+		$repository = $app->service('bill-pay.repository');
+		$categoryRepository = $app->service('category-cost.repository');
 		$auth = $app->service('auth');
 
 		$data = $request->getParsedBody();
 		$data['user_id'] = $auth->user()->getId();
 		$data['date_launch'] = dateParse($data['date_launch']);
 		$data['value'] = numberParse($data['value']);
+
+		$data['category_cost_id'] = $categoryRepository->findOneBy([
+			'id' => $data['category_cost_id'],
+			'user_id' => $auth->user()->getId()
+		])->id;
 
 		$repository->create($data);
 
@@ -37,7 +50,7 @@ $app
 	}, 'bill-pays.store')
 
 	->get('/bill-pays/{id}/edit', function(ServerRequestInterface $request) use($app) {
-		$repository = $app->service('bill-receive.repository');
+		$repository = $app->service('bill-pay.repository');
 		$auth = $app->service('auth');
 		$view = $app->service('view.renderer');
 		$id = $request->getAttribute('id');
@@ -47,14 +60,18 @@ $app
 			'user_id' => $auth->user()->getId()
 		]);
 
+		$categoryRepository = $app->service('category-cost.repository');
+		$categories = $categoryRepository->findByField('user_id', $auth->user()->getId());
+
 		return $view->render('bill-pays/edit.html.twig', [
-			'bill' => $bill
+			'bill' => $bill,
+			'categories' => $categories
 		]);
 
 	}, 'bill-pays.edit')
 
 	->post('/bill-pays/{id}/update', function(ServerRequestInterface $request) use($app) {
-		$repository = $app->service('bill-receive.repository');
+		$repository = $app->service('bill-pay.repository');
 		$auth = $app->service('auth');
 
 		$id = $request->getAttribute('id');
@@ -62,6 +79,12 @@ $app
 		$data['user_id'] = $auth->user()->getId();
 		$data['date_launch'] = dateParse($data['date_launch']);
 		$data['value'] = numberParse($data['value']);
+
+		$categoryRepository = $app->service('category-cost.repository');
+		$data['category_cost_id'] = $categoryRepository->findOneBy([
+			'id' => $data['category_cost_id'],
+			'user_id' => $auth->user()->getId()
+		])->id;
 
 		$repository->update([
 			'id' => $id,
@@ -73,7 +96,7 @@ $app
 	}, 'bill-pays.update')
 
 	->get('/bill-pays/{id}/show', function(ServerRequestInterface $request) use($app) {
-		$repository = $app->service('bill-receive.repository');
+		$repository = $app->service('bill-pay.repository');
 		$auth = $app->service('auth');
 		$view = $app->service('view.renderer');
 		$id = $request->getAttribute('id');
@@ -90,7 +113,7 @@ $app
 	}, 'bill-pays.show')
 
 	->get('/bill-pays/{id}/delete', function(ServerRequestInterface $request) use($app) {
-		$repository = $app->service('bill-receive.repository');
+		$repository = $app->service('bill-pay.repository');
 		$auth = $app->service('auth');
 		$id = $request->getAttribute('id');
 

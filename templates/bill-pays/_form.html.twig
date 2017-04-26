@@ -1,0 +1,33 @@
+<form method="post" action="{{ action }}">
+    <div class="form-group">
+        <label class="control-label">Categoria de Custo</label>
+        <select class="form-control" value="{{ bill.category_cost_id }}"
+                name="category_cost_id">
+            {% for category in categories %}
+                <option value="{{ category.id }}" 
+                        {{ bill.category_cost_id is not null and bill.category_cost_id == category.id ? 'selected="selected"' : '' }}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Data de Lançamento</label>
+        <input type="text" name="date_launch" class="form-control" placeholder="DD/MM/YYYY" 
+    		value="{{ bill.date_launch | date('d/m/Y') }}">
+    </div>
+    <div class="form-group">
+        <label class="control-label">Nome</label>
+        <input type="text" name="name" class="form-control" placeholder="Nome" 
+    		value="{{ bill.name }}">
+    </div>
+    <div class="form-group">
+        <label class="control-label">Valor</label>
+        <input type="text" name="value" class="form-control" placeholder="0.000,00" 
+    		value="{{ bill.value | number_format(2, ',', '.') }}">
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">
+        <span class="glyphicon glyphicon-{{ submitIcon }}"></span>
+        Salvar
+    </button>
+</form>
