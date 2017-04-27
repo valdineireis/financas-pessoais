@@ -19,6 +19,8 @@ $app
 		$statements = $repository->all($dateStart, $dateEnd, $auth->user()->getId());
 
     	return $view->render('statements.html.twig', [
-    		'statements' => $statements
+    		'statements' => $statements,
+    		'dateStart' => $dateStart,
+    		'dateEnd' => $dateEnd
 		]);
     }, 'statements.list');
