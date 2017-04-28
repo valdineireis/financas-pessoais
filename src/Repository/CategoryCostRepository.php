@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace VRSFin\Repository;
 
-use Illuminate\Support\Collection;
-use VRSFin\Models\BillPay;
-use VRSFin\Models\BillReceive;
 use VRSFin\Models\CategoryCost;
 
 class CategoryCostRepository extends DefaultRepository implements CategoryCostRepositoryInterface
