@@ -87,10 +87,8 @@ class Application
         $route = $this->service('route');
 
         /**
-* 
-         *
- * @var ServerRequestInterface $request 
-*/
+         * @var ServerRequestInterface $request 
+         */
         $request = $this->service(RequestInterface::class);
 
         if (!$route) {
