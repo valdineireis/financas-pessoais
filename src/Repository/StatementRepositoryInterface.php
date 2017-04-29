@@ -5,5 +5,5 @@ namespace VRSFin\Repository;
 
 interface StatementRepositoryInterface
 {
-	public function all(string $dateStart, string $dateEnd, int $userId): array;
+    public function all(string $dateStart, string $dateEnd, int $userId): array;
 }

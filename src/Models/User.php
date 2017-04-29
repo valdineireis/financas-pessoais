@@ -8,22 +8,22 @@ use Jasny\Auth\User as JasnyUser;
 
 class User extends Model implements JasnyUser, UserInterface
 {
-	// Mass Assignment
-	protected $fillable = [
-		'first_name',
-		'last_name',
-		'email',
-		'password'
-	];
+    // Mass Assignment
+    protected $fillable = [
+    'first_name',
+    'last_name',
+    'email',
+    'password'
+    ];
 
-	/**
+    /**
      * Get user id
      * 
      * @return int
      */
     public function getId(): int
     {
-    	return (int) $this->id;
+        return (int) $this->id;
     }
     
     /**
@@ -33,7 +33,7 @@ class User extends Model implements JasnyUser, UserInterface
      */
     public function getUsername(): string
     {
-    	return $this->email;
+        return $this->email;
     }
     
     /**
@@ -43,7 +43,7 @@ class User extends Model implements JasnyUser, UserInterface
      */
     public function getHashedPassword(): string
     {
-    	return $this->password;
+        return $this->password;
     }
     
     /**
@@ -53,7 +53,7 @@ class User extends Model implements JasnyUser, UserInterface
      */
     public function onLogin()
     {
-    	// TODO: Implement onLogin method.
+        // TODO: Implement onLogin method.
     }
     
     /**
@@ -63,7 +63,7 @@ class User extends Model implements JasnyUser, UserInterface
      */
     public function onLogout()
     {
-    	// TODO: Implement onLogout method.
+        // TODO: Implement onLogout method.
     }
 
     public function getFullName(): string

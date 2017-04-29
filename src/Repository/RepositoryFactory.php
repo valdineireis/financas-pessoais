@@ -5,8 +5,8 @@ namespace VRSFin\Repository;
 
 class RepositoryFactory
 {
-	public static function factory(string $modelClass)
-	{
-		return new DefaultRepository($modelClass);
-	}
+    public static function factory(string $modelClass)
+    {
+        return new DefaultRepository($modelClass);
+    }
 }
