@@ -63,7 +63,9 @@ $app
             $id = $request->getAttribute('id');
             $data = $request->getParsedBody();
 
-            if (isset($data['password'])) unset($data['password']);
+            if (isset($data['password'])) { 
+                unset($data['password']); 
+            }
             $repository->update($id, $data);
 
             return $app->route('users.list');

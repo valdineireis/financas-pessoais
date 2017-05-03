@@ -12,19 +12,21 @@ function dateParse($date)
 
 /**
  * Tenta formatar uma string (DD/MM/YYYY) em um tipo date (YYYY-MM-DD)
- * @param  [type] $date Data
+ *
+ * @param  mixed $date Data
  * @return DateTime
  */
 function dateTryParse($date)
 {
-    $date = isset($date) && !empty($date) ? 
-        $date : new \DateTime();
+    $date = isset($date) && !empty($date) ? $date : new \DateTime();
 
-    if (!($date instanceof \DateTime)) 
+    if (!($date instanceof \DateTime)) { 
         $date = \DateTime::createFromFormat('d/m/Y', $date);
+    }
 
-    if ($date === false)
+    if ($date === false) {
         throw new \Exception();
+    }
 
     return $date->format('Y-m-d');
 }
