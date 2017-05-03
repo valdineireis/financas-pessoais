@@ -9,13 +9,8 @@ $app
             $auth = $app->service('auth');
             $data = $request->getQueryParams();
 
-            $dateStart = $data['date_start'] ?? (new \DateTime())->modify('-1 month');
-            $dateStart = $dateStart instanceof \DateTime ? $dateStart->format('Y-m-d') 
-            : \DateTime::createFromFormat('d/m/Y', $dateStart)->format('Y-m-d');
-
-            $dateEnd = $data['date_end'] ?? new \DateTime();
-            $dateEnd = $dateEnd instanceof \DateTime ? $dateEnd->format('Y-m-d') 
-            : \DateTime::createFromFormat('d/m/Y', $dateEnd)->format('Y-m-d');
+            $dateStart = dateTryParse($data['date_start'] ?? (new \DateTime())->modify('-1 month'));
+            $dateEnd = dateTryParse($data['date_end'] ?? new \DateTime());
 
             $categories = $repository->sumByPeriod($dateStart, $dateEnd, $auth->user()->getId());
 
