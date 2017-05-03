@@ -91,6 +91,12 @@ class Application
             exit;
         }
 
+        $result = $this->runBefores();
+        if ($result) {
+            $this->emitResponse($result);
+            return;
+        }
+
         /**
          * @var ServerRequestInterface $request 
          */
@@ -100,18 +106,14 @@ class Application
             $request = $request->withAttribute($key, $value);
         }
 
-        $result = $this->runBefores();
-        if ($result) {
-            $this->emitResponse($result);
-            return;
-        }
-
         try {
             $callable = $route->handler;
             $response = $callable($request);
             $this->emitResponse($response);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             $this->internalRedirect('errors.403');
+        } catch (\Exception $e) {
+            $this->internalRedirect('errors.400');
         }
     }
 
