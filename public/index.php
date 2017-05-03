@@ -31,6 +31,7 @@ $app->get('/', function(ServerRequestInterface $request) {
 	return $response;
 });
 
+require_once __DIR__ . '/../src/controllers/errors.php';
 require_once __DIR__ . '/../src/controllers/charts.php';
 require_once __DIR__ . '/../src/controllers/statements.php';
 require_once __DIR__ . '/../src/controllers/category-costs.php';

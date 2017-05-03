@@ -86,15 +86,15 @@ class Application
     {
         $route = $this->service('route');
 
+        if (!$route) {
+            $this->internalRedirect('errors.404');
+            exit;
+        }
+
         /**
          * @var ServerRequestInterface $request 
          */
         $request = $this->service(RequestInterface::class);
-
-        if (!$route) {
-            echo "Page not found";
-            exit;
-        }
 
         foreach ($route->attributes as $key => $value) {
             $request = $request->withAttribute($key, $value);
@@ -106,14 +106,24 @@ class Application
             return;
         }
 
-        $callable = $route->handler;
-        $response = $callable($request);
-        $this->emitResponse($response);
+        try {
+            $callable = $route->handler;
+            $response = $callable($request);
+            $this->emitResponse($response);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            $this->internalRedirect('errors.403');
+        }
     }
 
     protected function emitResponse(ResponseInterface $response): void
     {
         $emitter = new SapiEmitter();
         $emitter->emit($response);
+    }
+
+    protected function internalRedirect(string $name): void
+    {
+        $response = $this->route($name);
+        $this->emitResponse($response);
     }
 }
