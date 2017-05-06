@@ -1,39 +1,50 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    <div class="white-box">
-        <h3 class="box-title box-form">Ver usuário
-            <div class="pull-right">
-                <a href="{{ route('users.edit',{'id': user.id}) }}"
-                    class="btn btn-primary">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                    Editar
-                </a>
-                <a href="{{ route('users.delete',{'id': user.id}) }}"
-                    class="btn btn-danger">
-                    <span class="glyphicon glyphicon-remove"></span>
-                    Remover
-                </a>
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Ver usuário
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="panel-body">
+                        <div class="row">
+                            <a href="{{ route('users.edit',{'id': user.id}) }}"
+                                class="btn btn-primary">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                Editar
+                            </a>
+                            <a href="{{ route('users.delete',{'id': user.id}) }}"
+                                class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove"></span>
+                                Remover
+                            </a>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">#</th>
+                                        <td>{{ user.id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Nome</th>
+                                        <td>{{ user.first_name ~ ' ' ~ user.last_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">E-mail</th>
+                                        <td>{{ user.email }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </h3>
-        <br>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <th scope="row">#</th>
-                        <td>{{ user.id }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Nome</th>
-                        <td>{{ user.first_name ~ ' ' ~ user.last_name }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">E-mail</th>
-                        <td>{{ user.email }}</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 {% endblock %}
