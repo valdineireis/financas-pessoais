@@ -1,45 +1,58 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    <div class="white-box">
-        <h3 class="box-title box-form">Administração de categorias de custo
-            <div class="pull-right">
-                <a href="{{ route('category-costs.new') }}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Adicionar
-                </a>
+	<div class="container">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Administração de categorias de custo
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="{{ route('category-costs.new') }}" class="btn btn-default">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Adicionar
+                            </a>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <thead>
+	                                <tr>
+	                                    <th style="width: 10px">#</th>
+	                                    <th>Nome</th>
+	                                    <th>Ações</th>
+	                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for category in categories %}
+                                    <tr>
+                                        <td>{{ category.id }}</td>
+                                        <td>{{ category.name }}</td>
+                                        <td>
+                                            <a href="{{ route('category-costs.edit',{'id': category.id}) }}">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                                Editar
+                                            </a>
+                                            &nbsp;|&nbsp;
+                                            <a href="{{ route('category-costs.show',{'id': category.id}) }}">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                                Remover
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </h3>
-        <br>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th style="width: 10px">#</th>
-                        <th>Nome</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for category in categories %}
-                    <tr>
-                        <td>{{ category.id }}</td>
-                        <td>{{ category.name }}</td>
-                        <td>
-                            <a href="{{ route('category-costs.edit',{'id': category.id}) }}">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                Editar
-                            </a>
-                            &nbsp;|&nbsp;
-                            <a href="{{ route('category-costs.show',{'id': category.id}) }}">
-                                <span class="glyphicon glyphicon-remove"></span>
-                                Remover
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
         </div>
     </div>
 {% endblock %}
