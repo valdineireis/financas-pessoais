@@ -1,20 +1,13 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Editar categoria de custo
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    {% set action = route('category-costs.update',{'id': category.id}) %}
-                    {% set submitIcon = 'pencil' %}
-                    {% include 'category-costs/_form.html.twig' %}
-                </div>
-            </div>
+    <div class="white-box">
+        <h3 class="box-title box-form">Editar categoria de custo</h3>
+        <br>
+        <div class="row box-form">
+            {% set action = route('category-costs.update',{'id': category.id}) %}
+            {% set submitIcon = 'pencil' %}
+            {% include 'category-costs/_form.html.twig' %}
         </div>
     </div>
 {% endblock %}

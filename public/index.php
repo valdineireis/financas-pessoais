@@ -1,4 +1,9 @@
 <?php 
+// Permitindo a leitura de arquivos estáticos
+$filename = __DIR__.preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
+if (php_sapi_name() === 'cli-server' && is_file($filename)) {
+    return false;
+}
 
 use Psr\Http\Message\ServerRequestInterface;
 use VRSFin\Application;

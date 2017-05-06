@@ -1,33 +1,29 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-	<div class="container">
-        <div class="row">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Gráfico de gastos
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <form class="form-inline text-center" method="get" action="{{ route('charts.list') }}">
-                        <div class="form-group">
-                            <label class="control-label">Início</label>
-                            <input type="text" class="form-control" placeholder="DD/MM/YYYY" 
-                                name="date_start" value="{{ dateStart|date('d/m/Y') }}">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Fim</label>
-                            <input type="text" class="form-control" placeholder="DD/MM/YYYY" 
-                                name="date_end" value="{{ dateEnd|date('d/m/Y') }}">
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </form>
-                    <div id="chart-div"></div>
-                </div>
+    <div class="white-box">
+        <h3 class="box-title box-form">Gráfico de gastos
+            <div class="pull-right">
+                <form class="form-inline text-center" method="get" action="{{ route('charts.list') }}">
+                    <div class="form-group">
+                        <!--<label class="control-label">Início</label>-->
+                        <input type="text" class="form-control input-min" placeholder="DD/MM/YYYY" 
+                            name="date_start" value="{{ dateStart|date('d/m/Y') }}">
+                    </div>
+                    <div class="form-group">
+                        <span style="text-transform: lowercase">à</span>
+                        <!--<label class="control-label">Fim</label>-->
+                        <input type="text" class="form-control input-min" placeholder="DD/MM/YYYY" 
+                            name="date_end" value="{{ dateEnd|date('d/m/Y') }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </form>
             </div>
+        </h3>
+        <div class="row">
+            <div id="chart-div"></div>
         </div>
     </div>
 {% endblock %}
